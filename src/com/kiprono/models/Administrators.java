@@ -4,7 +4,59 @@ public class Administrators extends Users{
 	// classifier
 	private String role;
 	
+	// administrators can or cannot have an account too
 	
+	Accounts userAccount;
+	
+	// getters and setters
+	public void setAccount(Accounts acc) {this.userAccount = acc;}
+	
+	public Accounts getAccount(Accounts acc) {return this.userAccount;}
+	
+
+	public Accounts getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(Accounts userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	@Override
+	public String getCity() {
+		// TODO Auto-generated method stub
+		return super.getCity();
+	}
+
+	@Override
+	public void setCity(String city) {
+		// TODO Auto-generated method stub
+		super.setCity(city);
+	}
+
+	@Override
+	public String getState() {
+		// TODO Auto-generated method stub
+		return super.getState();
+	}
+
+	@Override
+	public void setState(String state) {
+		// TODO Auto-generated method stub
+		super.setState(state);
+	}
+
+	@Override
+	public int getZipCode() {
+		// TODO Auto-generated method stub
+		return super.getZipCode();
+	}
+
+	@Override
+	public void setZipCode(int zipCode) {
+		// TODO Auto-generated method stub
+		super.setZipCode(zipCode);
+	}
 
 	@Override
 	public String getFirstName() {

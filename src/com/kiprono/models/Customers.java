@@ -2,7 +2,51 @@ package com.kiprono.models;
 
 public class Customers extends Users{
 	
-	
+	Accounts customerAccount;
+
+	@Override
+	public String getCity() {
+		// TODO Auto-generated method stub
+		return super.getCity();
+	}
+
+	@Override
+	public void setCity(String city) {
+		// TODO Auto-generated method stub
+		super.setCity(city);
+	}
+
+	public Accounts getCustomerAccount() {
+		return customerAccount;
+	}
+
+	public void setCustomerAccount(Accounts customerAccount) {
+		this.customerAccount = customerAccount;
+	}
+
+	@Override
+	public String getState() {
+		// TODO Auto-generated method stub
+		return super.getState();
+	}
+
+	@Override
+	public void setState(String state) {
+		// TODO Auto-generated method stub
+		super.setState(state);
+	}
+
+	@Override
+	public int getZipCode() {
+		// TODO Auto-generated method stub
+		return super.getZipCode();
+	}
+
+	@Override
+	public void setZipCode(int zipCode) {
+		// TODO Auto-generated method stub
+		super.setZipCode(zipCode);
+	}
 
 	@Override
 	public String getFirstName() {
@@ -64,16 +108,4 @@ public class Customers extends Users{
 		super.setAddress(address);
 	}
 
-	@Override
-	public int getUserId() {
-		// TODO Auto-generated method stub
-		return super.getUserId();
-	}
-
-	@Override
-	public void setUserId(int userId) {
-		// TODO Auto-generated method stub
-		super.setUserId(userId);
-	}
-	
 }

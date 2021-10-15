@@ -1,7 +1,10 @@
 package com.kiprono.models;
 
+// abstract general users class
+
 abstract class Users {
 	//  Private fields
+	
 	private String firstName;
 	private String middleInitial;
 	private String lastName;
@@ -9,9 +12,40 @@ abstract class Users {
 	// contacts
 	private String phoneNumber;
 	private String address;
+	private String city;
+	private String state;
+	private int zipCode;
 	
+	// user id for referential integrity
 	//for uniqueness
 	private int userId;
+	
+		
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public int getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(int zipCode) {
+		this.zipCode = zipCode;
+	}
+
 
 	// getters and setters
 	public String getFirstName() {
