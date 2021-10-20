@@ -21,7 +21,7 @@ create  table if not exists customers(
 	firstName VARCHAR(50) not null,
 	middleInitial VARCHAR(2),
 	lastName VARCHAR(50) not null,
-	phoneNumber VARCHAR(10),
+	phoneNumber VARCHAR(18),
 	address VARCHAR(200),
 	city VARCHAR(50),
 	state varchar(2),
@@ -56,4 +56,9 @@ create table if not exists transactions(
 	transactionType varchar(20) not null,
 	amount decimal(20,2) not null
 );
+
+select * from customers C;
+select * from accounts a ;
+
+-- truncate customers cascade;
 
