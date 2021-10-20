@@ -11,7 +11,13 @@ from configparser import ConfigParser, Error
 import pandas as pd
 
 ###############
-
+#open .ini file, read the contents i.e
+#   [postgresql]
+#   host = localhost
+#   database = database-to-connect
+#   user = postgres
+#   password = yourpass
+#
 ###############
 def getConfig(filename, section):
     parser = ConfigParser()
@@ -19,19 +25,22 @@ def getConfig(filename, section):
     parser.read(filename)
 
 
-    db = {}
+    parameters = {}
 
     if parser.has_section(section):
         params = parser.items(section)
         for para in params:
-            db[para[0]] = para[1]
+            parameters[para[0]] = para[1]
 
     else:
         raise Exception('Section {0} not found in the {1} file'.format(section, filename))
 
-    return db
+    return parameters
 
-
+########################################################################
+#creates and return database connection
+#
+########################################################################
 def getConnection(filename, section):
     connection = None
 
@@ -39,13 +48,6 @@ def getConnection(filename, section):
         parameters = getConfig(filename, section)
         connection = psycopg2.connect(**parameters)
 
-        cursor = connection.cursor()
-
-        print("Postgresql database version")
-        cursor.execute('SELECT version()')
-
-        version = cursor.fetchone()
-        print(version)
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -56,7 +58,7 @@ def getConnection(filename, section):
 #
 #################################
 
-def readCsv(connection, filename):
+def initCustomers(connection, filename):
     cursor = connection.cursor()
     count = 0
     data = pd.read_csv(filename)
@@ -116,13 +118,16 @@ def initAccounts(connection, filename):
         except (Exception, psycopg2.DatabaseError) as e:
             print(f"Error '{e}' happened")
 
+
 def main():
     print("Start")
     file = "database.ini"
+    customersFile = "complete.csv"
+    accountsFile = "accounts.csv"
     section = "postgresql"
     connection = getConnection(filename=file, section=section)
-    #readCsv(connection, filename="complete.csv")
-    #initAccounts(connection=connection, filename="accounts.csv")
+    initCustomers(connection, customersFile)
+    initAccounts(connection, accountsFile)
 
     connection.close()
 
