@@ -20,6 +20,37 @@ abstract class Users {
 	//for uniqueness
 	private int userId;
 	
+	// credentials
+	private String userName;
+	private String passwd;
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPasswd() {
+		return passwd;
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	// role
+	private boolean isAdmin;
+	
 		
 	
 	public String getCity() {

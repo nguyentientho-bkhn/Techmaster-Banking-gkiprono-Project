@@ -3,21 +3,12 @@ drop table if exists customers CASCADE;
 drop table if exists administrators CASCADE;
 drop table if exists transactions CASCADE;
 drop table if exists accounts CASCADE;
-drop table if exists transactions cascade;
 
--- users table
---create  table if not exists users(
---	firstName VARCHAR(50) not null,
---	middleInitial VARCHAR(2),
---	lastName VARCHAR(50) not null,
---	phoneNumber VARCHAR(10),
---	address VARCHAR(200),
---	userId numeric
---);
+
 
 --customers table
 create  table if not exists customers(
-	userId numeric(8),
+	userId numeric(8) primary key,
 	firstName VARCHAR(50) not null,
 	middleInitial VARCHAR(2),
 	lastName VARCHAR(50) not null,
@@ -26,24 +17,30 @@ create  table if not exists customers(
 	city VARCHAR(50),
 	state varchar(2),
 	zipCode numeric (8),
-	accountNumber int primary key
+	username varchar(20) not null, -- default username
+	passwd varchar(20) not null, -- default password
+	superUser bool not null default false,
+	accountNumber int unique
 );
 
 -- adminstarators table
-create  table if not exists administrators(
-	userId numeric(8) primary key,
-	firstName VARCHAR(50) not null,
-	middleInitial VARCHAR(2),
-	lastName VARCHAR(50) not null,
-	phoneNumber VARCHAR(10),
-	address VARCHAR(200),
-	city VARCHAR(50),
-	state varchar(2),
-	zipCode numeric (8),	
-	accountNumber int not null
-);
+--create  table if not exists administrators(
+--	adminId numeric(8) primary key,
+--	firstName VARCHAR(50) not null,
+--	middleInitial VARCHAR(2),
+--	lastName VARCHAR(50) not null,
+--	phoneNumber VARCHAR(18),
+--	address VARCHAR(200),
+--	city VARCHAR(50),
+--	state varchar(2),
+--	zipCode numeric (8),	
+--	username varchar(20) not null, -- default username
+--	passwd varchar(20) not null, -- default password
+--	accountNumber int unique
+--);
 
 create table if not exists accounts(
+	-- maybe account name
 	accountId numeric(12) primary key,
 	runningBalance decimal(20,2),
 	accountNumber int references customers(accountNumber)
@@ -57,7 +54,8 @@ create table if not exists transactions(
 	amount decimal(20,2) not null
 );
 
-select * from customers C;
+
+
 select * from accounts a ;
 
 -- truncate customers cascade;

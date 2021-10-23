@@ -58,26 +58,26 @@ def getConnection(filename, section):
 #
 #################################
 
-def initCustomers(connection, filename):
+def initCustomers(connection, filename, table):
     cursor = connection.cursor()
     count = 0
     data = pd.read_csv(filename)
 
     print(data.head(6))
-    columns = ['cid','first','mi','last','phonenumber','addr','City','State','ZipCOde','accId']
+    columns = ['cid','first','mi','last','phonenumber','addr','City','State','ZipCOde','username','password','suser','accId']
 
     inserStatement = """
         INSERT INTO customers(
-            userid, firstname,middleinitial,lastname,phonenumber,address,city,state,zipcode,accountnumber
+            userId, firstname,middleinitial,lastname,phonenumber,address,city,state,zipcode,username,passwd,superUser,accountnumber
         )VALUES(
-            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s
+            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s
         )
     """
 
     for row in data.itertuples():
         try:
             cursor.execute(inserStatement, (
-                row.cid, row.first,row.mi,row.last,row.phonenumber,row.addr,row.City,row.State,row.ZipCOde,row.accId
+                row.cid, row.first,row.mi,row.last,row.phonenumber,row.addr,row.City,row.State,row.ZipCOde,row.username,row.password,row.suser,row.accId
             ))
             connection.commit()
             count+=1
@@ -124,10 +124,13 @@ def main():
     file = "database.ini"
     customersFile = "complete.csv"
     accountsFile = "accounts.csv"
+    adminsFile = "admins.csv"
+    adminsAcc = "adminacc.csv"
     section = "postgresql"
     connection = getConnection(filename=file, section=section)
-    initCustomers(connection, customersFile)
+    initCustomers(connection, customersFile,"administrators")
     initAccounts(connection, accountsFile)
+    
 
     connection.close()
 
