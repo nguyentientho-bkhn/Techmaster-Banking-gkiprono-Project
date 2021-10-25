@@ -32,3 +32,6 @@ database.ini
 
 #TestEnc.java
 TestEnc.java
+
+#csv files
+*.csv
