@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * */
 public class Accounts {
 	private Customers accountHolder;
-	private float runningBalance;
+	private double runningBalance;
 	private int accountNumber;
 	
 	// List of transactions
@@ -21,10 +21,10 @@ public class Accounts {
 	public void setAccountHolder(Customers accountHolder) {
 		this.accountHolder = accountHolder;
 	}
-	public float getRunningBalance() {
+	public double getRunningBalance() {
 		return runningBalance;
 	}
-	public void setRunningBalance(float runningBalance) {
+	public void setRunningBalance(double runningBalance) {
 		this.runningBalance = runningBalance;
 	}
 	public int getAccountNumber() {

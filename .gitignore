@@ -29,3 +29,5 @@ hs_err_pid*
 
 #my credentials file
 database.ini
+
+#TestEnc.java
