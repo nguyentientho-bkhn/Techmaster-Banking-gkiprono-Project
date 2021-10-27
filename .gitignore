@@ -35,3 +35,6 @@ TestEnc.java
 
 #csv files
 *.csv
+
+#properties file
+properties.properties
