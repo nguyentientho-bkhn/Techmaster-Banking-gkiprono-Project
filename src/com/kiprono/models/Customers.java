@@ -2,6 +2,18 @@ package com.kiprono.models;
 
 public class Customers extends Users{
 	
+	@Override
+	public boolean isSudoer() {
+		// TODO Auto-generated method stub
+		return super.isSudoer();
+	}
+
+	@Override
+	public void setSudoer(boolean isSudoer) {
+		// TODO Auto-generated method stub
+		super.setSudoer(isSudoer);
+	}
+
 	Accounts customerAccount;
 
 	@Override

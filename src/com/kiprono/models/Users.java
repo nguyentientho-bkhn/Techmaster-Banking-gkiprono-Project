@@ -24,6 +24,20 @@ abstract class Users {
 	private String userName;
 	private String passwd;
 	
+	// SUPER USERS
+	private boolean isSudoer = false;
+	
+	// search field
+	
+	
+	public boolean isSudoer() {
+		return isSudoer;
+	}
+
+	public void setSudoer(boolean isSudoer) {
+		this.isSudoer = isSudoer;
+	}
+
 	public String getUserName() {
 		return userName;
 	}

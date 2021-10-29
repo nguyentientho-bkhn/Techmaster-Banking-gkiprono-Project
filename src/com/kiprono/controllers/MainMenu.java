@@ -1,6 +1,7 @@
 package com.kiprono.controllers;
 import com.kiprono.utils.*;
 
+@SuppressWarnings("unused")
 public class MainMenu {
 	
 	private static MainMenu menu = new MainMenu();
@@ -42,8 +43,6 @@ public class MainMenu {
 			case 1:
 				// login page
 				loggedIn = Login.handleLogin();
-				loggedIn = false;
-				choice = Home();
 				break;
 			case 2:
 				// sign up

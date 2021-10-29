@@ -38,3 +38,10 @@ TestEnc.java
 
 #properties file
 properties.properties
+database.properties
+
+#target folde
+target/
+
+# settings file
+.settings/

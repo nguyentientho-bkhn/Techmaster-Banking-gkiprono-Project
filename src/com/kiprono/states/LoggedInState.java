@@ -9,6 +9,7 @@ import com.kiprono.utils.*;
  * employees can do that too
  * */
 
+@SuppressWarnings("unused")
 public class LoggedInState implements UserState {
 	private LoggedInState instance = new LoggedInState();
 	private LoggedInState() { 

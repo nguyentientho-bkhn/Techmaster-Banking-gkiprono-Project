@@ -56,7 +56,7 @@ create table if not exists transactions(
 
 
 
-select * from accounts a ;
+select * from  customers ;
 
 -- truncate customers cascade;
 
