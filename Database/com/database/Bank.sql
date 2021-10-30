@@ -49,7 +49,7 @@ create table if not exists accounts(
 create table if not exists transactions(
 	accountId numeric(12) references accounts(accountId),
 	transactionId varchar(10) primary key,
-	transactionDate timestamp without time zone not null default (current_timestamp at time zone 'CST'),
+	transactionDate timestamp without time zone default (current_timestamp at time zone 'CST'),
 	transactionType varchar(20) not null,
 	amount decimal(20,2) not null
 );
@@ -57,6 +57,17 @@ create table if not exists transactions(
 
 
 select * from  customers ;
+
+SELECT * FROM accounts WHERE accountnumber = 1356000;
+delete  from accounts  where  accountnumber = 1356000;
+
+alter table transactions add approved boolean default false;
+alter table transactions drop approved;
+
+select * from accounts a ;
+
+select * from transactions t ;
+
 
 -- truncate customers cascade;
 

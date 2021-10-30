@@ -26,6 +26,8 @@ abstract class Users {
 	
 	// SUPER USERS
 	private boolean isSudoer = false;
+	// role
+	private boolean isAdmin;
 	
 	// search field
 	
@@ -61,11 +63,6 @@ abstract class Users {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-
-	// role
-	private boolean isAdmin;
-	
-		
 	
 	public String getCity() {
 		return city;

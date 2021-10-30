@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.kiprono.models.Customers;
+import com.kiprono.utils.DatabaseConnection;
 
 @SuppressWarnings("unused")
 public class TestConnection {

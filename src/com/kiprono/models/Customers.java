@@ -1,6 +1,17 @@
 package com.kiprono.models;
 
 public class Customers extends Users{
+	private Accounts customerAccount;
+	private int accountNumber;
+
+	// getters and setters of accountNumber
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 	
 	@Override
 	public boolean isSudoer() {
@@ -13,8 +24,6 @@ public class Customers extends Users{
 		// TODO Auto-generated method stub
 		super.setSudoer(isSudoer);
 	}
-
-	Accounts customerAccount;
 
 	@Override
 	public String getCity() {

@@ -9,7 +9,19 @@ public class Accounts {
 	private Customers accountHolder;
 	private double runningBalance;
 	private int accountNumber;
-	
+	private int accId;
+	public int getAccId() {
+		return accId;
+	}
+	public void setAccId(int accId) {
+		this.accId = accId;
+	}
+	public LinkedList<Transaction> getTransactions() {
+		return transactions;
+	}
+	public void setTransactions(LinkedList<Transaction> transactions) {
+		this.transactions = transactions;
+	}
 	// List of transactions
 	@SuppressWarnings("unused")
 	private LinkedList<Transaction> transactions = new LinkedList<Transaction>();
