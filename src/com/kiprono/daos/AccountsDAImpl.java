@@ -83,6 +83,8 @@ public class AccountsDAImpl implements AccountsData {
 			stmt.setInt(3, acc.getAccountHolder().getAccountNumber());
 			stmt.execute();
 			System.out.println("Account added");
+			setTransaction(acc);
+			System.out.println("Transaction added successfully");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("this generated exception");
@@ -104,8 +106,6 @@ public class AccountsDAImpl implements AccountsData {
 			stmt.setInt(2, acc.getAccountNumber());
 			stmt.executeUpdate();
 			System.out.println("Account created successfully");
-			setTransaction(acc);
-			System.out.println("Transaction added successfully");
 			
 		}
 		catch(Exception e){
@@ -156,30 +156,30 @@ public class AccountsDAImpl implements AccountsData {
 	
 
 //	// create main method to test
-	public static void main(String[] args) {
-		AccountsData accountsDA = new AccountsDAImpl();
-		Accounts account1 = new Accounts();
-//		Accounts account = new Accounts();
-//		//account.setAccId(1);
-		account1.setAccId(102015);
-		account1.setRunningBalance(1000.00);
-		account1.setAccountNumber(1356000);
-//		//accountsDA.UpdateAccount(account);
-		setTransaction(account1);
-//		//accountsDA.setAccount(account);
-//		account1 = accountsDA.getAccount(1356000);
-//		//accountsDA.UpdateAccount(account);
-//		//System.out.println(accountsDA.getAccount(1));
-//		
-//		System.out.println(account1.getRunningBalance());
-//		
-//		ArrayList<Accounts> accounts = accountsDA.getAllAccounts();
-//		//System.out.println(accountsDA.getAllAccounts());
-//		System.out.println("ACCOUNT ID	|ACCOUNT NUMBER		|RUNNING BALANCE	");
-//		for (Accounts acc : accounts) {
-//			
-//			System.out.println(acc.getAccId()+"		|"+acc.getAccountNumber()+"		|"+acc.getRunningBalance());
-//		}
-	}
+//	public static void main(String[] args) {
+////		AccountsData accountsDA = new AccountsDAImpl();
+////		Accounts account1 = new Accounts();
+//////		Accounts account = new Accounts();
+//////		//account.setAccId(1);
+////		account1.setAccId(102015);
+////		account1.setRunningBalance(1000.00);
+////		account1.setAccountNumber(1356000);
+//////		//accountsDA.UpdateAccount(account);
+////		setTransaction(account1);
+//////		//accountsDA.setAccount(account);
+//////		account1 = accountsDA.getAccount(1356000);
+//////		//accountsDA.UpdateAccount(account);
+//////		//System.out.println(accountsDA.getAccount(1));
+//////		
+//////		System.out.println(account1.getRunningBalance());
+//////		
+//////		ArrayList<Accounts> accounts = accountsDA.getAllAccounts();
+//////		//System.out.println(accountsDA.getAllAccounts());
+//////		System.out.println("ACCOUNT ID	|ACCOUNT NUMBER		|RUNNING BALANCE	");
+//////		for (Accounts acc : accounts) {
+//////			
+//////			System.out.println(acc.getAccId()+"		|"+acc.getAccountNumber()+"		|"+acc.getRunningBalance());
+////		}
+//	}
 
 }
