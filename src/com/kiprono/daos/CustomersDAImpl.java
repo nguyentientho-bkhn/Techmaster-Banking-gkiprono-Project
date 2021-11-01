@@ -106,7 +106,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			stmt.setInt(13, cu.getAccountNumber());
 			stmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
 			closeResources();
 		}
@@ -155,9 +155,9 @@ public class CustomersDAImpl implements CustomersDataAccess {
 	}
 
 	// create main method to test the class
-	public static void main(String[] args) {
-		CustomersDAImpl customerDAOImpl = new CustomersDAImpl();
-		Customers customer = new Customers();
+//	public static void main(String[] args) {
+//		CustomersDAImpl customerDAOImpl = new CustomersDAImpl();
+//		Customers customer = new Customers();
 //		customer.setUserId(1);
 //		customer.setFirstName("John");
 //		customer.setLastName("Doe");
@@ -192,12 +192,12 @@ public class CustomersDAImpl implements CustomersDataAccess {
 //		System.out.println(customerDAOImpl.getCustomer(110104));
 //		System.out.println("after getb customer");
 		//System.out.println(customerDAOImpl.getAllCustomers());
-		System.out.println("after get all");
-
-		//get list of customers
-		ArrayList<Customers> customers = customerDAOImpl.getAllCustomers();
-		for (Customers c : customers) {
-			System.out.println(c.getFirstName());
-		}
-	}
+//		System.out.println("after get all");
+//
+//		//get list of customers
+//		ArrayList<Customers> customers = customerDAOImpl.getAllCustomers();
+//		for (Customers c : customers) {
+//			System.out.println(c.getFirstName());
+//		}
+//	}
 }

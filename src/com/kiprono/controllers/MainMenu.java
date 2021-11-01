@@ -1,11 +1,13 @@
 package com.kiprono.controllers;
-import com.kiprono.utils.*;
+import com.kiprono.models.Customers;
+import com.kiprono.utils.Keyboard;
 
 @SuppressWarnings("unused")
 public class MainMenu {
 	
 	private static MainMenu menu = new MainMenu();
 	private static boolean loggedIn = false;
+	private static Customers customer = null;
 	
 	public static MainMenu getMenu() {
 		return menu;
@@ -36,6 +38,7 @@ public class MainMenu {
 	// do this
 	public static void ContextMenu() {
 		int choice;
+		String uname=null;
 		int acc=0;
 		do {
 			choice = Home();
@@ -46,8 +49,9 @@ public class MainMenu {
 				break;
 			case 2:
 				// sign up
-				acc = SignUp.addCustomer();
-				System.out.println("\n*****\nCongrats, your acc number is: " + String.valueOf(acc)+ "\n*****");
+				customer = SignUp.addCustomer();
+				System.out.println("\n*****\nCongrats, your acc number is: " + String.valueOf(customer.getAccountNumber())+ "\n*****");
+				System.out.println("Your username is: " + customer.getUserName() + " and password is your account number");
 				System.out.println("You can now log in to the bank");
 				break;
 			case 3:

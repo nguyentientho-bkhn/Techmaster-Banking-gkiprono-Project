@@ -1,5 +1,7 @@
 package com.kiprono.models;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /*Accounts class
  * 
@@ -10,23 +12,25 @@ public class Accounts {
 	private double runningBalance;
 	private int accountNumber;
 	private int accId;
+	
+	@SuppressWarnings("unused")
+	private List<Transaction> transactions = new LinkedList<Transaction>();
+	
+	
 	public int getAccId() {
 		return accId;
 	}
 	public void setAccId(int accId) {
 		this.accId = accId;
 	}
-	public LinkedList<Transaction> getTransactions() {
+	public List<Transaction> getTransactions() {
 		return transactions;
 	}
-	public void setTransactions(LinkedList<Transaction> transactions) {
-		this.transactions = transactions;
+	public void setTransactions(ArrayList<Transaction> transactions2) {
+		this.transactions = transactions2;
 	}
 	// List of transactions
-	@SuppressWarnings("unused")
-	private LinkedList<Transaction> transactions = new LinkedList<Transaction>();
-	
-	
+		
 	public Customers getAccountHolder() {
 		return accountHolder;
 	}

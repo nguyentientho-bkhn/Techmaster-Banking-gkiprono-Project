@@ -70,16 +70,17 @@ public class AccountsDAImpl implements AccountsData {
 	public void setAccount(Accounts acc) {
 		// add account to database
 		connection = DatabaseConnection.getConnection();
-		String query = "INSERT INTO accounts (accountid,accountnumber, runningbalance) VALUES (?,?, ?)";
+		String query = "INSERT INTO accounts (accountid, runningbalance,accountnumber) VALUES (?,?, ?)";
 		//stmt.setInt(1, acc.getAccId());
 		try {
 			stmt = connection.prepareStatement(query);
 			stmt.setInt(1, acc.getAccId());
-			stmt.setInt(2, acc.getAccountNumber());
-			stmt.setDouble(3, acc.getRunningBalance());
-			ResultSet rs = stmt.executeQuery();
+			stmt.setDouble(2, acc.getRunningBalance());
+			stmt.setInt(3, acc.getAccountHolder().getAccountNumber());
+			stmt.execute();
+			System.out.println("Account added");
 		} catch (SQLException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			System.out.println("this generated exception");
 		}
 		

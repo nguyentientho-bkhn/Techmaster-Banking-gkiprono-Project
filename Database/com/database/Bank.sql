@@ -23,6 +23,8 @@ create  table if not exists customers(
 	accountNumber int unique
 );
 
+alter table customers alter COLUMN passwd type varchar(50);
+
 -- adminstarators table
 --create  table if not exists administrators(
 --	adminId numeric(8) primary key,
@@ -67,6 +69,8 @@ alter table transactions drop approved;
 select * from accounts a ;
 
 select * from transactions t ;
+
+truncate transactions ;
 
 
 -- truncate customers cascade;

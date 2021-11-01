@@ -1,6 +1,10 @@
 package com.kiprono.controllers;
-import com.kiprono.models.*;
-import com.kiprono.utils.*;
+import com.kiprono.daos.CustomersRepoImpl;
+import com.kiprono.daos.CustomersRepository;
+import com.kiprono.models.Accounts;
+import com.kiprono.models.Customers;
+import com.kiprono.utils.EncryptDecrypt;
+import com.kiprono.utils.Keyboard;
 
 public class SignUp {
 	// personal details
@@ -26,8 +30,12 @@ public class SignUp {
 	private static double runningBalance;
 	private static String balance;
 	
+	// customers repo
+	private static CustomersRepository customerRepo = new CustomersRepoImpl();
+	
 	// handles new customer, returns account number;
-	public static int addCustomer() {
+	public static Customers addCustomer() {
+		
 		boolean isint = true;
 		Customers newCustomer = new Customers();
 		Accounts account = new Accounts();
@@ -68,8 +76,7 @@ public class SignUp {
 		}
 		
 		// set the details
-		account = createAccount(newCustomer, runningBalance);
-		newCustomer.setCustomerAccount(account);
+		
 		
 		// encrypt password <account number for now>
 		
@@ -82,7 +89,7 @@ public class SignUp {
 			e.printStackTrace();
 		}
 		
-		
+		newCustomer.setUserId(generateUserId());
 		newCustomer.setFirstName(firstName);
 		newCustomer.setMiddleInitial(middleInitial);
 		newCustomer.setLastName(lastName);
@@ -92,17 +99,25 @@ public class SignUp {
 		newCustomer.setCity(city);
 		newCustomer.setState(state);
 		newCustomer.setZipCode(zip_code);
+
+		newCustomer.setUserName(userNameGenerator());
 		
-		return newCustomer.getCustomerAccount().getAccountNumber();
+		
+		account = createAccount(newCustomer, runningBalance);
+		newCustomer.setCustomerAccount(account);
+		
+		customerRepo.addCustomer(newCustomer);
+		return newCustomer;
 	}
 	
 	
 	// creates and return the account details
 	private static Accounts createAccount(Customers newCustomer, double runningBalance) {
 		Accounts account = new Accounts();
-		int accountNumber;
-		accountNumber = generateAccountNumber();
+		int accountNumber = generateAccountNumber();
 		
+		newCustomer.setAccountNumber(accountNumber);
+		account.setAccId(generateAccountId());
 		account.setAccountNumber(accountNumber);
 		account.setRunningBalance(runningBalance);
 		account.setAccountHolder(newCustomer);
@@ -110,15 +125,46 @@ public class SignUp {
 		return account;
 	}
 	
+	private static int generateAccountId() {
+		int accountId = 0;
+		int max = 999999;
+		int min = 100000;
+
+		accountId = (int) (Math.random() * (max - min) + min);
+		return accountId;
+	}
+
+
 	// create and returns valid account number
 	private static int generateAccountNumber() {
 		int acc = 0;
-		int min = 100000000;
-		int max = 999999999;
+		int min = 100000;
+		int max = 9999999;
 		
 		// future check if generated random number is already in use
 		acc = (int)Math.floor(Math.random()*(max-min+1)+min);
 		
 		return acc;
+	}
+	// generate user id
+	private static int generateUserId() {
+		int userId = 0;
+		int min = 2000000;
+		int max = 9999999;
+
+		// future check if generated random number is already in use
+		userId = (int)Math.floor(Math.random()*(max-min+1)+min);
+
+		return userId;
+	}
+
+	// concatinate first name, middle initial and last name
+	private static String userNameGenerator() {
+		String userId = "";
+		userId = firstName.substring(0, 2) + middleInitial + lastName.substring(0, 2);
+		// convert userId to lowercase
+		userId = userId.toLowerCase();
+		
+		return userId;
 	}
 }

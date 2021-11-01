@@ -16,4 +16,7 @@ public interface TransactionDataAccess {
     public void deleteTransaction(String id);
     //update transaction
     public void updateTransaction(Transaction transaction);
+    
+    //get all transactions in an account
+    public ArrayList<Transaction> getAccountTransaction(int accountId);
 }

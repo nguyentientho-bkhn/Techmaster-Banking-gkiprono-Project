@@ -4,11 +4,7 @@ import java.util.ArrayList;
 
 import com.kiprono.models.Customers;
 
-public interface CustomersRepository {
-	public Customers getCustomer(int custId);
-	
+public interface UsersRepo {
+	public Customers getCustomer(int id);
 	public ArrayList<Customers> getAllCustomers();
-
-	public void addCustomer(Customers customer);
-	
 }
