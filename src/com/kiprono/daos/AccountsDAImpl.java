@@ -4,13 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import com.kiprono.utils.*;
-import com.kiprono.models.*;
+
+import com.kiprono.models.Accounts;
+import com.kiprono.models.Transaction;
+import com.kiprono.utils.DatabaseConnection;
 
 public class AccountsDAImpl implements AccountsData {
 	private Connection connection = null;
 	private PreparedStatement stmt;
+	private static TransactionDataAccess transDa = new TransactionsDAImpl();
 
 	@Override // done
 	public Accounts getAccount(int accId) {
@@ -99,13 +103,41 @@ public class AccountsDAImpl implements AccountsData {
 			stmt.setDouble(1, acc.getRunningBalance());
 			stmt.setInt(2, acc.getAccountNumber());
 			stmt.executeUpdate();
-			System.out.println("Success");
+			System.out.println("Account created successfully");
+			setTransaction(acc);
+			System.out.println("Transaction added successfully");
+			
 		}
 		catch(Exception e){
 			System.out.println(e);
 		}
 		// close connection
 		closeResources();
+	}
+	// set new transaction
+	private static void setTransaction(Accounts acc){
+		ArrayList<Transaction> trans = new ArrayList<Transaction>();
+		Transaction transaction = new Transaction();
+		transaction.setAccountId(acc.getAccId());
+		transaction.setTransactionId(generateRandomString(8));
+		transaction.setAmount(acc.getRunningBalance());
+		transaction.setTransactionType("Deposit");
+		transaction.setTransactionDate(new Timestamp(System.currentTimeMillis()));
+		trans.add(transaction);
+		
+		transDa.setTransaction(transaction);
+
+	}
+
+	// randomly generate characters and numbers
+	private static String generateRandomString(int length) {
+		StringBuilder sb = new StringBuilder();
+		String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		for (int i = 0; i < length; i++) {
+			int index = (int) (Math.random() * characters.length());
+			sb.append(characters.charAt(index));
+		}
+		return sb.toString();
 	}
 
 	private void closeResources() {
@@ -124,16 +156,16 @@ public class AccountsDAImpl implements AccountsData {
 	
 
 //	// create main method to test
-//	public static void main(String[] args) {
-//		AccountsData accountsDA = new AccountsDAImpl();
-//		Accounts account1 = new Accounts();
+	public static void main(String[] args) {
+		AccountsData accountsDA = new AccountsDAImpl();
+		Accounts account1 = new Accounts();
 //		Accounts account = new Accounts();
 //		//account.setAccId(1);
-//		account.setAccId(102627);
-//		account.setRunningBalance(1000.00);
-//		account.setAccountNumber(1356000);
+		account1.setAccId(102015);
+		account1.setRunningBalance(1000.00);
+		account1.setAccountNumber(1356000);
 //		//accountsDA.UpdateAccount(account);
-//		
+		setTransaction(account1);
 //		//accountsDA.setAccount(account);
 //		account1 = accountsDA.getAccount(1356000);
 //		//accountsDA.UpdateAccount(account);
@@ -148,6 +180,6 @@ public class AccountsDAImpl implements AccountsData {
 //			
 //			System.out.println(acc.getAccId()+"		|"+acc.getAccountNumber()+"		|"+acc.getRunningBalance());
 //		}
-//	}
+	}
 
 }

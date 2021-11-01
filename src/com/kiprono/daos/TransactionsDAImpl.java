@@ -89,7 +89,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			System.out.println("Success");
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
 			closeResources();
 		}
