@@ -1,6 +1,20 @@
 package com.kiprono.models;
 
+import javax.crypto.spec.SecretKeySpec;
+
 public class Customers extends Users{
+	@Override
+	public String getKey() {
+		// TODO Auto-generated method stub
+		return super.getKey();
+	}
+
+	@Override
+	public void setKey(String key) {
+		// TODO Auto-generated method stub
+		super.setKey(key);
+	}
+
 	private Accounts customerAccount;
 	private int accountNumber;
 

@@ -1,6 +1,30 @@
 package com.kiprono.models;
 
 public class Administrators extends Users{
+	@Override
+	public String getKey() {
+		// TODO Auto-generated method stub
+		return super.getKey();
+	}
+
+	@Override
+	public void setKey(String key) {
+		// TODO Auto-generated method stub
+		super.setKey(key);
+	}
+
+	@Override
+	public boolean isSudoer() {
+		// TODO Auto-generated method stub
+		return super.isSudoer();
+	}
+
+	@Override
+	public void setSudoer(boolean isSudoer) {
+		// TODO Auto-generated method stub
+		super.setSudoer(isSudoer);
+	}
+
 	// classifier
 	private String role;
 	

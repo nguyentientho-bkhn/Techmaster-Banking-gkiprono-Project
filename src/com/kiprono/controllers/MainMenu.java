@@ -46,6 +46,9 @@ public class MainMenu {
 			case 1:
 				// login page
 				loggedIn = Login.handleLogin();
+				if(loggedIn) {
+					// logged in state
+				}
 				break;
 			case 2:
 				// sign up

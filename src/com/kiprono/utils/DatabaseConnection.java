@@ -54,7 +54,6 @@ public class DatabaseConnection {
 	public static Connection getConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			System.out.println("CONFIG VALID++ " + NEW_DATABASE);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +82,6 @@ public class DatabaseConnection {
 	private static Connection generateConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			System.out.println("CONFIG VALID");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

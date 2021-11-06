@@ -7,12 +7,15 @@ import java.sql.SQLException;
 
 import com.kiprono.models.Customers;
 import com.kiprono.utils.DatabaseConnection;
+import com.kiprono.utils.EncryptDecrypt;
+import com.kiprono.utils.PasswordUtils;
 
 public class LoginDA {
 
     private PreparedStatement statement;
     private Connection connection;
     ResultSet resultSet;
+    private EncryptDecrypt encryption = EncryptDecrypt.getEncryptor();
 
     // query database for customer with given username and password
     // get username annd password from database
@@ -40,6 +43,7 @@ public class LoginDA {
             customer.setState(resultSet.getString("state"));
             customer.setZipCode(resultSet.getInt("zipcode"));
             customer.setAccountNumber(resultSet.getInt("accountnumber"));
+            customer.setKey(resultSet.getString("secret_key"));
             
         } catch (SQLException e) {
             //e.printStackTrace();
@@ -49,6 +53,22 @@ public class LoginDA {
         }
         
         return customer;        
+    }
+
+    // update customer password
+    public void updateCustomer(Customers customer) {
+        String query = "UPDATE customers SET passwd = ? WHERE username = ?";
+        connection = DatabaseConnection.getConnection();
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, customer.getPasswd());
+            statement.setString(2, customer.getUserName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
     }
 
     private void closeResources() {
@@ -62,12 +82,14 @@ public class LoginDA {
             e.printStackTrace();
         }
     }
-
+    
     // create main method to test the class
     public static void main(String[] args) {
         LoginDA loginDA = new LoginDA();
-        Customers customer = loginDA.finCustomer("JohnAForsy");
+        Customers customer = loginDA.finCustomer("JohnAForsyth");
         System.out.println(customer.getUserName());
+        customer.setPasswd("newPass");
+        loginDA.updateCustomer(customer);
     }
 
 }

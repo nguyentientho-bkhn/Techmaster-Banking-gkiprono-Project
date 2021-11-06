@@ -1,5 +1,5 @@
 package com.kiprono.models;
-
+import javax.crypto.spec.SecretKeySpec;
 // abstract general users class
 
 abstract class Users {
@@ -30,8 +30,17 @@ abstract class Users {
 	private boolean isAdmin;
 	
 	// search field
+	// secret key
+	private String key;
 	
-	
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 	public boolean isSudoer() {
 		return isSudoer;
 	}

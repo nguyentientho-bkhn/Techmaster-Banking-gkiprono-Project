@@ -66,7 +66,7 @@ public class EncryptDecrypt {
 			result = new String(decryptedByte);
 			
 		}catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return result;

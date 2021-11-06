@@ -1,6 +1,5 @@
 package com.kiprono.daos;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.kiprono.models.Accounts;

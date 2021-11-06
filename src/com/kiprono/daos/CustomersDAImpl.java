@@ -40,6 +40,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			customer.setPasswd(rs.getString("passwd"));
 			customer.setAdmin(rs.getBoolean("superuser"));
 			customer.setAccountNumber(rs.getInt("accountnumber"));
+			customer.setKey(rs.getString("secret_key"));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -73,6 +74,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 				customer.setUserName(rs.getString("username"));
 				customer.setPasswd(rs.getString("passwd"));
 				customer.setAdmin(rs.getBoolean("superuser"));
+				customer.setKey(rs.getString("secret_key"));
 				customer.setAccountNumber(rs.getInt("accountnumber"));
 				customers.add(customer);
 			}
@@ -87,7 +89,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 	@Override // works
 	public void setCustomer(Customers cu) {
 		connection = DatabaseConnection.getConnection();
-		String query = "INSERT INTO customers (userid, firstname, lastname, middleinitial, address, city, state, zipcode, phonenumber, username, passwd, superuser, accountnumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO customers (userid, firstname, lastname, middleinitial, address, city, state, zipcode, phonenumber, username, passwd, superuser, accountnumber, secret_key) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
 		try {
 			stmt = connection.prepareStatement(query);
@@ -104,6 +106,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			stmt.setString(11, cu.getPasswd());
 			stmt.setBoolean(12, cu.isAdmin());
 			stmt.setInt(13, cu.getAccountNumber());
+			stmt.setString(14, cu.getKey());
 			stmt.executeQuery();
 		} catch (SQLException e) {
 			//e.printStackTrace();
@@ -116,7 +119,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 	@Override // works
 	public void updateCustomer(Customers cu) {
 		connection = DatabaseConnection.getConnection();
-		String query = "UPDATE customers SET firstname = ?, lastname = ?, middleinitial = ?, address = ?, city = ?, state = ?, zipcode = ?, phonenumber = ?, username = ?, passwd = ?, superuser = ?, accountnumber = ? WHERE userid = ?";
+		String query = "UPDATE customers SET firstname = ?, lastname = ?, middleinitial = ?, address = ?, city = ?, state = ?, zipcode = ?, phonenumber = ?, username = ?, passwd = ?, superuser = ?, accountnumber = ?, secret_key = ? WHERE userid = ?";
 
 		try {
 			stmt = connection.prepareStatement(query);
@@ -133,6 +136,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			stmt.setBoolean(11, cu.isAdmin());
 			stmt.setInt(12, cu.getAccountNumber());
 			stmt.setInt(13, cu.getUserId());
+			stmt.setString(14, cu.getKey());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

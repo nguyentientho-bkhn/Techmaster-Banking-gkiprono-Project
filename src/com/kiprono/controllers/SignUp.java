@@ -5,6 +5,7 @@ import com.kiprono.models.Accounts;
 import com.kiprono.models.Customers;
 import com.kiprono.utils.EncryptDecrypt;
 import com.kiprono.utils.Keyboard;
+import com.kiprono.utils.PasswordUtils;
 
 public class SignUp {
 	// personal details
@@ -29,6 +30,7 @@ public class SignUp {
 	// account
 	private static double runningBalance;
 	private static String balance;
+	private static String salt;
 	
 	// customers repo
 	private static CustomersRepository customerRepo = new CustomersRepoImpl();
@@ -81,13 +83,10 @@ public class SignUp {
 		// encrypt password <account number for now>
 		
 		plainTextPass = String.valueOf(account.getAccountNumber());
-		try {
-			encryptedPassword = encoderDecoder.encrypt(plainTextPass);
-			newCustomer.setPasswd(encryptedPassword);
-			// update this record in database
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		salt = PasswordUtils.getSalt(25);
+		encryptedPassword = PasswordUtils.generateSecurePassword(plainTextPass, salt);
+		newCustomer.setKey(salt);
+		newCustomer.setPasswd(encryptedPassword);
 		
 		newCustomer.setUserId(generateUserId());
 		newCustomer.setFirstName(firstName);
