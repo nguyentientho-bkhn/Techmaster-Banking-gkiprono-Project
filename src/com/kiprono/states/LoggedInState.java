@@ -64,7 +64,7 @@ public class LoggedInState implements UserState {
 		// TODO Auto-generated method stub
 		// check if user is super user
 		if(customer.isAdmin()) {
-			superUserMenu();
+			otherUsersMenu();
 		}else {
 			mainMenu();
 		}
@@ -155,7 +155,7 @@ public class LoggedInState implements UserState {
 		return choice;
 	}
 	
-	private void superUserMenu() {
+	private int superUserMenu() {
 		int choice  = 0;
 		System.out.println("******************** Welcome **************** ");
 		System.out.println("1. View Balance");
@@ -174,6 +174,8 @@ public class LoggedInState implements UserState {
 			System.out.print("Invalid choice!! ");
 			choice = keyboard.readInt("Enter 1-9: ");
 		}
+		
+		return choice;
 	}
 	
 	// Balance
