@@ -4,6 +4,18 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Customers extends Users{
 	@Override
+	public boolean isVerified() {
+		// TODO Auto-generated method stub
+		return super.isVerified();
+	}
+
+	@Override
+	public void setVerified(boolean verified) {
+		// TODO Auto-generated method stub
+		super.setVerified(verified);
+	}
+
+	@Override
 	public String getKey() {
 		// TODO Auto-generated method stub
 		return super.getKey();

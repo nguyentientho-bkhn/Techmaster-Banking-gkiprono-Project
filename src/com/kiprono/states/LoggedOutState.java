@@ -17,4 +17,10 @@ public class LoggedOutState implements UserState {
 	private LoggedOutState getLoggedOutInstance() {
 		return this.instance;
 	}
+
+	@Override
+	public void gotoState() {
+		// TODO Auto-generated method stub
+		
+	}
 }

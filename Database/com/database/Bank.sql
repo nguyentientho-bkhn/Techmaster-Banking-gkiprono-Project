@@ -72,6 +72,9 @@ select * from transactions t ;
 
 truncate transactions ;
 
+alter table customers add secret_key varchar(100);
+alter table customers add is_approved boolean default false;
+
 
 -- truncate customers cascade;
 

@@ -30,6 +30,16 @@ abstract class Users {
 	private boolean isAdmin;
 	
 	// search field
+	private boolean verified;
+	
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+
 	// secret key
 	private String key;
 	

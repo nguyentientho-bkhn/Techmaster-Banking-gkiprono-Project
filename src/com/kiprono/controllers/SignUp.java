@@ -66,11 +66,17 @@ public class SignUp {
 		}
 		
 		balance = keyboard.readString("How much do u wish to deposit today?\nMin of $50: ");
-		boolean isfloat = true;
-		while(isfloat) {
+		boolean isfloat = true, validBal= true;
+		while(isfloat && validBal) {
 			try {
 				runningBalance = Double.parseDouble(balance);
 				isfloat = false;
+				if(runningBalance >=50.0) {
+					validBal = true;
+				}else {
+					validBal = false;
+					System.out.println("Deposit at least $50!");
+				}
 			}catch(NumberFormatException e) {
 				System.out.println("Input is not a valid balance!");
 				balance = keyboard.readString("How much do u wish to deposit today?\nMin of $50: ");

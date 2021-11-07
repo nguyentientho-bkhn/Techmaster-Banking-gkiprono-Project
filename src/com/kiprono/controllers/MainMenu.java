@@ -1,5 +1,7 @@
 package com.kiprono.controllers;
 import com.kiprono.models.Customers;
+import com.kiprono.states.Context;
+import com.kiprono.states.LoggedInState;
 import com.kiprono.utils.Keyboard;
 
 @SuppressWarnings("unused")
@@ -8,6 +10,8 @@ public class MainMenu {
 	private static MainMenu menu = new MainMenu();
 	private static boolean loggedIn = false;
 	private static Customers customer = null;
+	private static Context ctxt =  new Context();
+	private static LoggedInState state = new LoggedInState();
 	
 	public static MainMenu getMenu() {
 		return menu;
@@ -45,9 +49,12 @@ public class MainMenu {
 			switch (choice) {
 			case 1:
 				// login page
-				loggedIn = Login.handleLogin();
+				loggedIn = true;
 				if(loggedIn) {
 					// logged in state
+					ctxt.setCustomer(customer);
+					ctxt.setState(state);
+					state.gotoState();
 				}
 				break;
 			case 2:
