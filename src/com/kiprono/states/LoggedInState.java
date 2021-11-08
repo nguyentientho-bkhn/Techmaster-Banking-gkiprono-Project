@@ -14,6 +14,8 @@ import com.kiprono.models.Accounts;
 import com.kiprono.models.Customers;
 import com.kiprono.models.Transaction;
 import com.kiprono.utils.Keyboard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /*
  * while here, user can deposit, withdraw, perform account-account transfer, accept transfer
@@ -23,6 +25,8 @@ import com.kiprono.utils.Keyboard;
 
 @SuppressWarnings("unused")
 public class LoggedInState implements UserState {
+	private static final Logger LOG = LogManager.getLogger(LoggedInState.class);
+	
 	Keyboard keyboard = Keyboard.getKeyboard();
 	private Customers customer;
 	Accounts account;
@@ -61,12 +65,17 @@ public class LoggedInState implements UserState {
 
 	@Override
 	public void gotoState() {
+		LOG.trace("Logged in" + String.valueOf(System.currentTimeMillis()));
 		// TODO Auto-generated method stub
 		// check if user is super user
 		if(customer.isAdmin()) {
+			LOG.debug(String.valueOf(System.currentTimeMillis()) + ": isAdmin loaded");
 			otherUsersMenu();
+			LOG.debug(String.valueOf(System.currentTimeMillis()) + ": isAdmin exit" );
 		}else {
+			LOG.debug(String.valueOf(System.currentTimeMillis()) + ": user start" );
 			mainMenu();
+			LOG.debug(String.valueOf(System.currentTimeMillis()) + ": user end");
 		}
 	}
 
@@ -180,6 +189,7 @@ public class LoggedInState implements UserState {
 	
 	// Balance
 	private void viewBalance() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Viewed Balance");
 		System.out.println("******************** Balance **************** ");
 		System.out.println("Balance: " + customer.getCustomerAccount().getRunningBalance());
 		System.out.println("******************** Balance **************** ");
@@ -187,6 +197,7 @@ public class LoggedInState implements UserState {
 
 	// withdraw cash
 	private void withdrawCash() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Withdrawal");
 		System.out.println("******************** Withdraw **************** ");
 		int amount;
 		boolean invalid = false;
@@ -198,6 +209,7 @@ public class LoggedInState implements UserState {
 			} else if (amount < 0) {
 				System.out.println("Invalid amount!! ");
 				invalid = true;
+				LOG.error(String.valueOf(System.currentTimeMillis()) + ": Insufficient balance to perform transaction");
 			} else {
 				account.setRunningBalance(account.getRunningBalance()-amount);
 				System.out.println("Withdraw successful!! ");
@@ -225,6 +237,7 @@ public class LoggedInState implements UserState {
 
 	// deposit cash
 	private void depositCash() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Deposit");
 		System.out.println("******************** Deposit **************** ");
 		int amount;
 		boolean invalid = false;
@@ -234,6 +247,7 @@ public class LoggedInState implements UserState {
 			if(amount < 0) {
 				System.out.println("Invalid amount!! ");
 				invalid = true;
+				LOG.error(String.valueOf(System.currentTimeMillis()) + ": Insufficient balance to perform transaction");
 			} else {
 				account.setRunningBalance(account.getRunningBalance()+amount);
 				System.out.println("Deposit successful!! ");
@@ -251,6 +265,7 @@ public class LoggedInState implements UserState {
 
 	// send money
 	private void sendMoney() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Money sent");
 		System.out.println("******************** Send Money **************** ");
 		int amount;
 		boolean invalid = false;
@@ -262,6 +277,7 @@ public class LoggedInState implements UserState {
 			} else if (amount < 0) {
 				System.out.println("Invalid amount!! ");
 				invalid = true;
+				LOG.error(String.valueOf(System.currentTimeMillis()) + ": Insufficient balance to perform transaction");
 			} else {
 				account.setRunningBalance(account.getRunningBalance()-amount);
 				System.out.println("Send successful!! ");
@@ -279,6 +295,7 @@ public class LoggedInState implements UserState {
 
 	// accept money transfer
 	private void acceptMoneyTransfer() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Accept Money");
 		System.out.println("******************** Accept Money Transfer **************** ");
 		int amount;
 		boolean invalid = false;
@@ -288,6 +305,7 @@ public class LoggedInState implements UserState {
 			if(amount < 0) {
 				System.out.println("Invalid amount!! ");
 				invalid = true;
+				LOG.error(String.valueOf(System.currentTimeMillis()) + ": insifficient money");
 			} else {
 				account.setRunningBalance(account.getRunningBalance()+amount);
 				System.out.println("Accept successful!! ");
@@ -305,6 +323,7 @@ public class LoggedInState implements UserState {
 
 	// view all transactions
 	private void viewAllTransactions() {
+		LOG.debug(String.valueOf(System.currentTimeMillis()) + ": List transactions");
 		System.out.println("******************** View All Transactions **************** ");
 		for(Transaction transaction : account.getTransactions()) {
 			System.out.println(transaction.getTransactionId() + " " + transaction.getTransactionType() + " " + transaction.getAmount() + " " + transaction.getTransactionDate());
@@ -315,6 +334,7 @@ public class LoggedInState implements UserState {
 
 	// view all transactions log
 	private void listAllTransactions(){
+		LOG.debug(String.valueOf(System.currentTimeMillis()) + ": List transactions");
 		allTrans = transactionDataAccess.getAllTransaction();
 		System.out.println("******************** List All Transactions **************** ");
 		for(Transaction transaction : allTrans) {
@@ -327,7 +347,7 @@ public class LoggedInState implements UserState {
 	// check a bank account
 	private void checkAccount() {
 		// ask for user id
-		
+		LOG.debug(String.valueOf(System.currentTimeMillis()) + ": Account checked");
 		
 		System.out.println("******************** Check Account **************** ");
 		int userId = keyboard.readInt("Enter user id: ");
@@ -346,12 +366,14 @@ public class LoggedInState implements UserState {
 
 	// open an account
 	private void openAccount() {
+		LOG.debug(String.valueOf(System.currentTimeMillis()) + ": Account created");
 		System.out.println("******************** Open Account **************** ");
 		SignUp.addCustomer();
 	}
 
 	// approve an Transaction
 	private void approveTransaction() {
+		LOG.debug(String.valueOf(System.currentTimeMillis()) + ": Approving transaction");
 		System.out.println("******************** Approve Transaction **************** ");
 		allTrans = transactionDataAccess.getAllTransaction();
 		
@@ -377,6 +399,7 @@ public class LoggedInState implements UserState {
 
 	// aprove an account
 	private void approveAccount() {
+		LOG.debug(String.valueOf(System.currentTimeMillis()) + ": Approving the account");
 		System.out.println("******************** Approve Account **************** ");
 		allCustomers = customerRepository.getAllCustomers();
 		for (Customers customer : allCustomers) {

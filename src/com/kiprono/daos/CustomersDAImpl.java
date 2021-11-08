@@ -1,7 +1,8 @@
 package com.kiprono.daos;
 
 import com.kiprono.utils.*;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,18 +10,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.kiprono.models.Customers;
+import com.kiprono.states.LoggedInState;
 
 public class CustomersDAImpl implements CustomersDataAccess {
 	private Connection connection;
 	private PreparedStatement stmt;
 	private ResultSet rs;
+	private static final Logger LOG = LogManager.getLogger(CustomersDAImpl.class);
 
 	@Override // works
 	public Customers getCustomer(int userId) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": cuatomer Accessed, getCustomer()");
 		Customers customer = new Customers();
 		connection = DatabaseConnection.getConnection();
 		String query = "SELECT * FROM customers WHERE userid = ?";
-
+		
 		try {
 			stmt = connection.prepareStatement(query);
 			stmt.setInt(1, userId);
@@ -44,7 +48,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			customer.setVerified(rs.getBoolean("is_approved"));
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -53,6 +57,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 
 	@Override // works
 	public ArrayList<Customers> getAllCustomers() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Get all customers");
 		ArrayList<Customers> customers = new ArrayList<Customers>();
 		connection = DatabaseConnection.getConnection();
 		String query = "SELECT * FROM customers";
@@ -80,7 +85,8 @@ public class CustomersDAImpl implements CustomersDataAccess {
 				customers.add(customer);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -89,6 +95,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 
 	@Override // works
 	public void setCustomer(Customers cu) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Customer set");
 		connection = DatabaseConnection.getConnection();
 		String query = "INSERT INTO customers (userid, firstname, lastname, middleinitial, address, city, state, zipcode, phonenumber, username, passwd, superuser, accountnumber, secret_key, is_approved) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
@@ -112,6 +119,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			stmt.executeQuery();
 		} catch (SQLException e) {
 			//e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -120,6 +128,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 
 	@Override // works
 	public void updateCustomer(Customers cu) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Customer updated");
 		connection = DatabaseConnection.getConnection();
 		String query = "UPDATE customers SET firstname = ?, lastname = ?, middleinitial = ?, address = ?, city = ?, state = ?, zipcode = ?, phonenumber = ?, username = ?, passwd = ?, superuser = ?, accountnumber = ?, secret_key = ?, is_approved = ? WHERE userid = ?";
 
@@ -142,7 +151,8 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			stmt.setInt(15, cu.getUserId());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -157,7 +167,8 @@ public class CustomersDAImpl implements CustomersDataAccess {
 			}
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+//			e.printStackTrace();
+			LOG.trace(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 	}
 

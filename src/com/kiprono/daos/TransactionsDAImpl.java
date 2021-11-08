@@ -8,15 +8,18 @@ import java.util.ArrayList;
 
 import com.kiprono.models.Transaction;
 import com.kiprono.utils.*;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TransactionsDAImpl implements TransactionDataAccess {
 	private Connection connection;
 	private PreparedStatement stmt;
 	private ResultSet rs;
+	private static final Logger LOG = LogManager.getLogger(TransactionsDAImpl.class);
 
 	@Override
 	public ArrayList<Transaction> getAllTransaction() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": all transactions Accessed");
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		
 		connection = DatabaseConnection.getConnection();
@@ -37,7 +40,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -46,6 +49,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 
 	@Override // done
 	public Transaction getOneTransaction(String id) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": transaction Accessed");
 		Transaction transaction = new Transaction();
 		connection = DatabaseConnection.getConnection();
 		String query = "SELECT * FROM transactions WHERE transactionid = ?";
@@ -64,7 +68,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -73,7 +77,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 
 	@Override // DONE
 	public void setTransaction(Transaction transaction) {
-		
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Transaction set");
 		connection = DatabaseConnection.getConnection();
 		String query = "INSERT INTO transactions (accountid,transactionid, transactiondate ,transactiontype,amount, approved) VALUES (?,?,?,?,?,?)";
 
@@ -89,7 +93,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			System.out.println("Success");
 			
 		} catch (SQLException e) {
-			//e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -97,7 +101,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 
 	@Override //working
 	public void deleteTransaction(String id) {
-		
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": transaction deleted");
 		connection = DatabaseConnection.getConnection();
 		String query = "DELETE FROM transactions WHERE transactionid = ?";
 		try {
@@ -106,7 +110,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			rs = stmt.executeQuery();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -114,7 +118,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 
 	@Override // working
 	public void updateTransaction(Transaction transaction) {
-		
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": transaction updated");
 		connection = DatabaseConnection.getConnection();
 		String query = "UPDATE transactions SET accountid = ?, approved =?, amount = ? WHERE transactionid = ?";
 		try {
@@ -128,7 +132,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			
 		} catch (SQLException e) {
 			//e.printStackTrace();
-			
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}
@@ -143,12 +147,13 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			}
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 	}
 
 	@Override
 	public ArrayList<Transaction> getAccountTransaction(int accountId) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": All transactions accessed");
 		connection = DatabaseConnection.getConnection();
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		String query = "SELECT * FROM transactions WHERE accountid = ?";
@@ -168,7 +173,7 @@ public class TransactionsDAImpl implements TransactionDataAccess {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		} finally {
 			closeResources();
 		}

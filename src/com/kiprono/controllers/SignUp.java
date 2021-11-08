@@ -130,7 +130,7 @@ public class SignUp {
 		return account;
 	}
 	
-	private static int generateAccountId() {
+	public static int generateAccountId() {
 		int accountId = 0;
 		int max = 999999;
 		int min = 100000;
@@ -141,7 +141,7 @@ public class SignUp {
 
 
 	// create and returns valid account number
-	private static int generateAccountNumber() {
+	public static int generateAccountNumber() {
 		int acc = 0;
 		int min = 100000;
 		int max = 9999999;
@@ -152,7 +152,7 @@ public class SignUp {
 		return acc;
 	}
 	// generate user id
-	private static int generateUserId() {
+	public static int generateUserId() {
 		int userId = 0;
 		int min = 2000000;
 		int max = 9999999;
@@ -164,7 +164,7 @@ public class SignUp {
 	}
 
 	// concatinate first name, middle initial and last name
-	private static String userNameGenerator() {
+	public static String userNameGenerator() {
 		String userId = "";
 		userId = firstName.substring(0, 2) + middleInitial + lastName.substring(0, 2);
 		// convert userId to lowercase

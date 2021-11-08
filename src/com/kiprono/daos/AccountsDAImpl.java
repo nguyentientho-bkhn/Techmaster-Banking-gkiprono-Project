@@ -1,5 +1,7 @@
 package com.kiprono.daos;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +17,12 @@ public class AccountsDAImpl implements AccountsData {
 	private Connection connection = null;
 	private PreparedStatement stmt;
 	private static TransactionDataAccess transDa = new TransactionsDAImpl();
+	private static final Logger LOG = LogManager.getLogger(AccountsDAImpl.class);
+
 
 	@Override // done
 	public Accounts getAccount(int accId) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Account Accessed");
 		Accounts account = new Accounts();
 		ResultSet rs;
 		// query database
@@ -35,7 +40,7 @@ public class AccountsDAImpl implements AccountsData {
 			account.setAccountNumber(rs.getInt("accountnumber"));
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 				
 		closeResources();
@@ -44,6 +49,7 @@ public class AccountsDAImpl implements AccountsData {
 
 	@Override
 	public ArrayList<Accounts> getAllAccounts() {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": All accounts accessed, getAllAccounts()");
 		ArrayList<Accounts> accounts = new ArrayList<Accounts>();
 		// query database
 		connection = DatabaseConnection.getConnection();
@@ -61,9 +67,8 @@ public class AccountsDAImpl implements AccountsData {
 				accounts.add(account);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
-		
 		// close connection
 		closeResources();
 
@@ -72,6 +77,7 @@ public class AccountsDAImpl implements AccountsData {
 
 	@Override // done
 	public void setAccount(Accounts acc) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Account set, setAccount()");
 		// add account to database
 		connection = DatabaseConnection.getConnection();
 		String query = "INSERT INTO accounts (accountid, runningbalance,accountnumber) VALUES (?,?, ?)";
@@ -86,8 +92,7 @@ public class AccountsDAImpl implements AccountsData {
 			setTransaction(acc);
 			System.out.println("Transaction added successfully");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("this generated exception");
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 		
 		// close connection
@@ -97,6 +102,7 @@ public class AccountsDAImpl implements AccountsData {
 	@Override // done
 	public void UpdateAccount(Accounts acc) {
 		// update account in database
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Account updated ");
 
 		try{
 			connection = DatabaseConnection.getConnection();
@@ -109,7 +115,7 @@ public class AccountsDAImpl implements AccountsData {
 			
 		}
 		catch(Exception e){
-			System.out.println(e);
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 		// close connection
 		closeResources();
@@ -148,7 +154,7 @@ public class AccountsDAImpl implements AccountsData {
 			}
 		} catch (SQLException e) {
 			
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 	}
 

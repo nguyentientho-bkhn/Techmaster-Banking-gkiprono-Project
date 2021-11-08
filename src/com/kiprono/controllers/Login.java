@@ -1,9 +1,14 @@
 package com.kiprono.controllers;
 import com.kiprono.models.*;
+import com.kiprono.states.Context;
+import com.kiprono.states.LoggedInState;
 import com.kiprono.utils.*;
 import com.kiprono.daos.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Login {
+	private static final Logger LOG = LogManager.getLogger(TransactionsDAImpl.class);
 	private static Customers customer;
 	// personal details
 	private String firstName;
@@ -29,6 +34,9 @@ public class Login {
 	// current customer
 	private static LoginDA loginDa = new LoginDA();
 	
+	private static Context ctxt =  new Context();
+	private static LoggedInState state1 = new LoggedInState();
+	
 	
 	
 	
@@ -44,6 +52,9 @@ public class Login {
 		
 		if(authenticateCustomers(uid, passwd)) {
 			// login state
+			ctxt.setCustomer(customer);
+			ctxt.setState(state1);
+			state1.gotoState();
 		}else {
 			System.out.println("This feature is coming\nTaking you back to main");
 			authorised = false;
@@ -56,6 +67,7 @@ public class Login {
 	// checks details if they match with the records
 	// if password same as account number, then user is first time login, prompt change of password
 	private static boolean authenticateCustomers(String userId,String password) {
+		LOG.info(String.valueOf(System.currentTimeMillis()) + " :User logged in");
 		boolean authenticated = false;
 		boolean firstTimeUser = false;
 		int accountNum, passwd=0,savedPass=0;
@@ -100,10 +112,10 @@ public class Login {
 					System.out.println("Success!");
 				}
 			} catch(NullPointerException s) {
-				s.printStackTrace();
+				LOG.error(String.valueOf(System.currentTimeMillis()) + s.getMessage());
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 				// this feature is still developing, our customer is null at the moment
 			}
 		}
@@ -115,7 +127,7 @@ public class Login {
 	private static boolean changePassword(int passwd) {
 		boolean changed = false, match = false;
 		String newPasswd, confirmPasswd;
-		
+		LOG.info(String.valueOf(System.currentTimeMillis()) + "Password changed");
 		// check if that is their password		
 		// check if they match
 		System.out.println("**********************************\nChange your default password\n");
@@ -138,7 +150,7 @@ public class Login {
 				loginDa.updateCustomer(customer);
 				System.out.println("Password changed!");
 			}catch(Exception e){
-				e.printStackTrace();
+				LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 			}
 			changed = true;
 		}

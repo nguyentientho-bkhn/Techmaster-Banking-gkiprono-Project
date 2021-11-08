@@ -1,4 +1,6 @@
-package com.kiprono.controllers;
+package com.kiprono.views;
+import com.kiprono.controllers.Login;
+import com.kiprono.controllers.SignUp;
 import com.kiprono.models.Customers;
 import com.kiprono.states.Context;
 import com.kiprono.states.LoggedInState;
@@ -49,7 +51,8 @@ public class MainMenu {
 			switch (choice) {
 			case 1:
 				// login page
-				loggedIn = true;
+				
+				loggedIn = Login.handleLogin();
 				if(loggedIn) {
 					// logged in state
 					ctxt.setCustomer(customer);

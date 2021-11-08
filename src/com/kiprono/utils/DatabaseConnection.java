@@ -6,8 +6,13 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.kiprono.daos.TransactionsDAImpl;
 
 public class DatabaseConnection {
+	private static final Logger LOG = LogManager.getLogger(TransactionsDAImpl.class);
 	private static Connection conn;
 	// 	jdbc:postgresql://hostname:port/databaseName
 	private static String URL;
@@ -17,6 +22,7 @@ public class DatabaseConnection {
 	private static String HOST;
 
 	static {
+		LOG.info(String.valueOf(System.currentTimeMillis()) + ": properties file accessed");
 		try {
 			InputStream stream = ClassLoader.getSystemResourceAsStream("database.properties");
 			Properties properties = new Properties();
@@ -32,7 +38,7 @@ public class DatabaseConnection {
 			NEW_DATABASE = formatURL();
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 	}
 	// format url to capitalize first letter of database name
@@ -55,7 +61,7 @@ public class DatabaseConnection {
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 		
 		try {
@@ -64,12 +70,12 @@ public class DatabaseConnection {
 					conn = java.sql.DriverManager.getConnection(NEW_DATABASE, USERNAME, PASSWORD);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 		return conn;
 	}
@@ -92,12 +98,12 @@ public class DatabaseConnection {
 					conn = java.sql.DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
 		return conn;
 	}

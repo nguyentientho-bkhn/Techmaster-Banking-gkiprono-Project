@@ -1,6 +1,8 @@
 package com.kiprono.daos;
 
 import java.sql.Connection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ import com.kiprono.utils.EncryptDecrypt;
 import com.kiprono.utils.PasswordUtils;
 
 public class LoginDA {
-
+	private static final Logger LOG = LogManager.getLogger(TransactionsDAImpl.class);
     private PreparedStatement statement;
     private Connection connection;
     ResultSet resultSet;
@@ -24,7 +26,7 @@ public class LoginDA {
     public Customers finCustomer(String uname){
         Customers customer = new Customers();
         String query = "SELECT * FROM customers WHERE username = ?";
-
+        LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Customer accessed");
         connection = DatabaseConnection.getConnection();
         try {
             statement = connection.prepareStatement(query);
@@ -48,6 +50,7 @@ public class LoginDA {
         } catch (SQLException e) {
             //e.printStackTrace();
             System.out.println("Wrong User id");
+            LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
         } finally{
             closeResources();
         }
@@ -57,6 +60,7 @@ public class LoginDA {
 
     // update customer password
     public void updateCustomer(Customers customer) {
+    	LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Customer updated");
         String query = "UPDATE customers SET passwd = ? WHERE username = ?";
         connection = DatabaseConnection.getConnection();
         try {
@@ -65,7 +69,7 @@ public class LoginDA {
             statement.setString(2, customer.getUserName());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+        	LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
         } finally {
             closeResources();
         }
@@ -78,8 +82,7 @@ public class LoginDA {
                 statement.close();
             }
         } catch (SQLException e) {
-
-            e.printStackTrace();
+        	LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
         }
     }
     
