@@ -9,4 +9,7 @@ public interface AccountsRepository {
 	
 	public ArrayList<Accounts> getAllAccounts();
 	
+	public void updateAccount(Accounts account);
+	
+	public void createAccount(Accounts account);
 }

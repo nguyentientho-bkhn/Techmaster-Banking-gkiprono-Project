@@ -12,19 +12,20 @@ import java.util.ArrayList;
 import com.kiprono.models.Accounts;
 import com.kiprono.models.Transaction;
 import com.kiprono.utils.DatabaseConnection;
+import com.kiprono.utils.Keyboard;
 
 public class AccountsDAImpl implements AccountsData {
 	private Connection connection = null;
 	private PreparedStatement stmt;
 	private static TransactionDataAccess transDa = new TransactionsDAImpl();
 	private static final Logger LOG = LogManager.getLogger(AccountsDAImpl.class);
-
+	private ResultSet rs;
 
 	@Override // done
 	public Accounts getAccount(int accId) {
 		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": Account Accessed");
 		Accounts account = new Accounts();
-		ResultSet rs;
+		
 		// query database
 		connection = DatabaseConnection.getConnection();
 		String query = "SELECT * FROM accounts WHERE accountnumber = ?";
@@ -88,9 +89,8 @@ public class AccountsDAImpl implements AccountsData {
 			stmt.setDouble(2, acc.getRunningBalance());
 			stmt.setInt(3, acc.getAccountHolder().getAccountNumber());
 			stmt.execute();
-			System.out.println("Account added");
 			setTransaction(acc);
-			System.out.println("Transaction added successfully");
+			//System.out.println("Transaction added successfully");
 		} catch (SQLException e) {
 			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
 		}
@@ -111,7 +111,6 @@ public class AccountsDAImpl implements AccountsData {
 			stmt.setDouble(1, acc.getRunningBalance());
 			stmt.setInt(2, acc.getAccountNumber());
 			stmt.executeUpdate();
-			System.out.println("Account created successfully");
 			
 		}
 		catch(Exception e){
@@ -161,31 +160,28 @@ public class AccountsDAImpl implements AccountsData {
 	// create tostring method for accounts list
 	
 
-//	// create main method to test
-//	public static void main(String[] args) {
-////		AccountsData accountsDA = new AccountsDAImpl();
-////		Accounts account1 = new Accounts();
-//////		Accounts account = new Accounts();
-//////		//account.setAccId(1);
-////		account1.setAccId(102015);
-////		account1.setRunningBalance(1000.00);
-////		account1.setAccountNumber(1356000);
-//////		//accountsDA.UpdateAccount(account);
-////		setTransaction(account1);
-//////		//accountsDA.setAccount(account);
-//////		account1 = accountsDA.getAccount(1356000);
-//////		//accountsDA.UpdateAccount(account);
-//////		//System.out.println(accountsDA.getAccount(1));
-//////		
-//////		System.out.println(account1.getRunningBalance());
-//////		
-//////		ArrayList<Accounts> accounts = accountsDA.getAllAccounts();
-//////		//System.out.println(accountsDA.getAllAccounts());
-//////		System.out.println("ACCOUNT ID	|ACCOUNT NUMBER		|RUNNING BALANCE	");
-//////		for (Accounts acc : accounts) {
-//////			
-//////			System.out.println(acc.getAccId()+"		|"+acc.getAccountNumber()+"		|"+acc.getRunningBalance());
-////		}
-//	}
+	// create main method to test
+	public static void main(String[] args) {
+		AccountsData accountsDA = new AccountsDAImpl();
+		Accounts account1 = new Accounts();
+//		Accounts account = new Accounts();
+//		//account.setAccId(1);
+		int accNo = Keyboard.getKeyboard().readInt("Enter acc no: ");
+//		//accountsDA.setAccount(account);
+		account1 = accountsDA.getAccount(accNo);
+		System.out.println(accNo);
+//		account1 = accountsDA.getAccount(1356000);
+//		//accountsDA.UpdateAccount(account);
+		System.out.println(account1.getAccountNumber() +" " + account1.getRunningBalance());
+//		
+//		System.out.println(account1.getRunningBalance());
+//		
+//		ArrayList<Accounts> accounts = accountsDA.getAllAccounts();
+//		//System.out.println(accountsDA.getAllAccounts());
+//		System.out.println("ACCOUNT ID	|ACCOUNT NUMBER		|RUNNING BALANCE	");
+//		for (Accounts acc : accounts) {
+//			
+//			System.out.println(acc.getAccId()+"		|"+acc.getAccountNumber()+"		|"+acc.getRunningBalance());
+		}
 
 }

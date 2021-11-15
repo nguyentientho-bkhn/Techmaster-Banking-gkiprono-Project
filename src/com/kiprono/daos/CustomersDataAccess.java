@@ -16,4 +16,7 @@ public interface CustomersDataAccess {
 
 	// update customer
 	public void updateCustomer(Customers cu);
+	
+	//get one customer by user id
+	public Customers getCustomerbyUserId(String s);
 }

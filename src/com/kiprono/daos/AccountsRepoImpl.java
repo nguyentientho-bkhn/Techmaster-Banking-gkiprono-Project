@@ -32,4 +32,16 @@ public class AccountsRepoImpl implements AccountsRepository {
 		return accounts;
 	}
 
+	@Override
+	public void updateAccount(Accounts account) {
+		// TODO Auto-generated method stub
+		accountsData.UpdateAccount(account);
+	}
+
+	@Override
+	public void createAccount(Accounts account) {
+		accountsData.setAccount(account);
+		
+	}
+
 }

@@ -10,7 +10,7 @@ import com.kiprono.utils.Keyboard;
 public class MainMenu {
 	
 	private static MainMenu menu = new MainMenu();
-	private static boolean loggedIn = false;
+	public static boolean loggedIn = false;
 	private static Customers customer = null;
 	private static Context ctxt =  new Context();
 	private static LoggedInState state = new LoggedInState();
@@ -45,37 +45,39 @@ public class MainMenu {
 	public static void ContextMenu() {
 		int choice;
 		String uname=null;
+		Login login =  new Login();
 		int acc=0;
 		do {
 			choice = Home();
+			loggedIn = false;
 			switch (choice) {
-			case 1:
-				// login page
-				
-				loggedIn = Login.handleLogin();
-				if(loggedIn) {
-					// logged in state
-					ctxt.setCustomer(customer);
-					ctxt.setState(state);
-					state.gotoState();
-				}
-				break;
-			case 2:
-				// sign up
-				customer = SignUp.addCustomer();
-				System.out.println("\n*****\nCongrats, your acc number is: " + String.valueOf(customer.getAccountNumber())+ "\n*****");
-				System.out.println("Your username is: " + customer.getUserName() + " and password is your account number");
-				System.out.println("You can now log in to the bank");
-				break;
-			case 3:
-				// help menu
-				break;
-			case 4:
-				// exit
-				break;
-			default:
-				System.out.println("Error");
+				case 1:
+					// login page
+					loggedIn = login.handleLogin();
+					if(loggedIn) {
+						// logged in state
+						ctxt.setCustomer(customer);
+						state.gotoState();
+					}
+					break;
+				case 2:
+					// sign up
+					customer = SignUp.addCustomer();
+					System.out.println("\n*****\nCongrats, your acc number is: " + String.valueOf(customer.getAccountNumber())+ "\n*****");
+					System.out.println("Your username is: " + customer.getUserName() + " and password is your account number");
+					System.out.println("You can now log in to the bank");
+					break;
+				case 3:
+					System.out.println("Help is on the way");
+					// help menu
+					break;
+				case 4:
+					// exit
+					break;
+				default:
+					System.out.println("Error");
 			}
+			
 			
 		} while (choice != 4);
 		System.out.println("\n****************************************************************");

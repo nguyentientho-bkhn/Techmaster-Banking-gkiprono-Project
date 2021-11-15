@@ -75,6 +75,11 @@ truncate transactions ;
 alter table customers add secret_key varchar(100);
 alter table customers add is_approved boolean default false;
 
+alter table transactions alter column transactionId varchar(25) primary key;
+
+select * from transactions where transactiontype = 'Received';
+
+SELECT * FROM accounts WHERE accountnumber = 8900558;
 
 -- truncate customers cascade;
 

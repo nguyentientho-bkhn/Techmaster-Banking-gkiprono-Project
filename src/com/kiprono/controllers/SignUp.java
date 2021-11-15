@@ -1,4 +1,6 @@
 package com.kiprono.controllers;
+import com.kiprono.daos.AccountsRepoImpl;
+import com.kiprono.daos.AccountsRepository;
 import com.kiprono.daos.CustomersRepoImpl;
 import com.kiprono.daos.CustomersRepository;
 import com.kiprono.models.Accounts;
@@ -34,6 +36,7 @@ public class SignUp {
 	
 	// customers repo
 	private static CustomersRepository customerRepo = new CustomersRepoImpl();
+	private static AccountsRepository accountRepo = new AccountsRepoImpl();
 	
 	// handles new customer, returns account number;
 	public static Customers addCustomer() {
@@ -117,7 +120,7 @@ public class SignUp {
 	
 	
 	// creates and return the account details
-	private static Accounts createAccount(Customers newCustomer, double runningBalance) {
+	public static Accounts createAccount(Customers newCustomer, double runningBalance) {
 		Accounts account = new Accounts();
 		int accountNumber = generateAccountNumber();
 		
@@ -127,6 +130,22 @@ public class SignUp {
 		account.setRunningBalance(runningBalance);
 		account.setAccountHolder(newCustomer);
 		
+		return account;
+	}
+	
+	public static Accounts createAccount(Customers newCustomer, double runningBalance, int userId) {
+		Accounts account = new Accounts();
+		int accountNumber = newCustomer.getAccountNumber();
+		
+		newCustomer.setAccountNumber(accountNumber);
+		account.setAccId(generateAccountId());
+		account.setAccountNumber(accountNumber);
+		account.setRunningBalance(runningBalance);
+		account.setAccountHolder(newCustomer);
+		account.setAccId(userId);
+		
+		accountRepo.createAccount(account);
+		System.out.println("Account created successfully!");
 		return account;
 	}
 	

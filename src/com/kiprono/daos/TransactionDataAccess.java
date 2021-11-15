@@ -19,4 +19,10 @@ public interface TransactionDataAccess {
     
     //get all transactions in an account
     public ArrayList<Transaction> getAccountTransaction(int accountId);
+    
+    //get received transactions
+    public ArrayList<Transaction> getReceivedTransactions(int accountId);
+    
+    // update one transaction
+    
 }

@@ -11,4 +11,6 @@ public interface CustomersRepository {
 
 	public void addCustomer(Customers customer);
 	
+	public Customers getCustomerByUserName(String s);
+	
 }

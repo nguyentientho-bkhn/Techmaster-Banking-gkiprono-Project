@@ -1,14 +1,21 @@
 package com.kiprono.controllers;
-import com.kiprono.models.*;
-import com.kiprono.states.Context;
-import com.kiprono.states.LoggedInState;
-import com.kiprono.utils.*;
-import com.kiprono.daos.*;
+import java.util.logging.FileHandler;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.kiprono.daos.LoginDA;
+import com.kiprono.daos.TransactionsDAImpl;
+import com.kiprono.models.Customers;
+import com.kiprono.states.Context;
+import com.kiprono.states.LoggedInState;
+import com.kiprono.utils.EncryptDecrypt;
+import com.kiprono.utils.Keyboard;
+import com.kiprono.utils.PasswordUtils;
+
 public class Login {
 	private static final Logger LOG = LogManager.getLogger(TransactionsDAImpl.class);
+	private static FileHandler handler;
 	private static Customers customer;
 	// personal details
 	private String firstName;
@@ -37,23 +44,27 @@ public class Login {
 	private static Context ctxt =  new Context();
 	private static LoggedInState state1 = new LoggedInState();
 	
+	public static boolean loggedIn = false;
+	
 	
 	
 	
 	// get user id and user name
-	public static boolean handleLogin() {
-		boolean isint= true, authorised = true, loggedIn = true;
+	public boolean handleLogin() {
+		customer = new Customers();
+		boolean isint= true, authorised = false;
 		String uid;
 		System.out.println("\nEnter Userid and password");
 		
 
 		uid = keyboard.readString("Username: ");
 		passwd = keyboard.readString("Password: ");
-		
-		if(authenticateCustomers(uid, passwd)) {
+		loggedIn = authenticateCustomers(uid, passwd);
+		if(loggedIn) {
 			// login state
 			ctxt.setCustomer(customer);
 			ctxt.setState(state1);
+			state1.setCustomer(customer);
 			state1.gotoState();
 		}else {
 			System.out.println("This feature is coming\nTaking you back to main");

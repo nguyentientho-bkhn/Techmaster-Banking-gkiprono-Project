@@ -49,6 +49,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 
 		} catch (SQLException e) {
 			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
+//			e.printStackTrace();
 		} finally {
 			closeResources();
 		}
@@ -87,6 +88,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
+//			e.printStackTrace();
 		} finally {
 			closeResources();
 		}
@@ -120,6 +122,7 @@ public class CustomersDAImpl implements CustomersDataAccess {
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
+//			e.printStackTrace();
 		} finally {
 			closeResources();
 		}
@@ -172,50 +175,42 @@ public class CustomersDAImpl implements CustomersDataAccess {
 		}
 	}
 
-	// create main method to test the class
-//	public static void main(String[] args) {
-//		CustomersDAImpl customerDAOImpl = new CustomersDAImpl();
-//		Customers customer = new Customers();
-//		customer.setUserId(1);
-//		customer.setFirstName("John");
-//		customer.setLastName("Doe");
-//		customer.setMiddleInitial("M");
-//		customer.setAddress("123 Main St");
-//		customer.setCity("New York");
-//		customer.setState("NY");
-//		customer.setZipCode(12345);
-//		customer.setPhoneNumber("123-456-7890");
-//		customer.setUserName("jdoe");
-//		customer.setPasswd("password");
-//		customer.setAdmin(false);
-//		customer.setAccountNumber(123456789);
-//		customerDAOImpl.setCustomer(customer);
-//		System.out.println(customerDAOImpl.getCustomer(1));
-//		System.out.println(customerDAOImpl.getAllCustomers());
-//		customer.setUserId(2);
-//		customer.setFirstName("Jane");
-//		customer.setLastName("Dayne");
-//		customer.setMiddleInitial("M");
-//		customer.setAddress("123 Main St");
-//		customer.setCity("New York");
-//		customer.setState("NY");
-//		customer.setZipCode(12345);
-//		customer.setPhoneNumber("123-456-7890");
-//		customer.setUserName("jdoeyt");
-//		customer.setPasswd("password");
-//		customer.setAdmin(false);
-//		customer.setAccountNumber(234567809);
-//		customerDAOImpl.updateCustomer(customer);
-//		System.out.println("after update");
-//		System.out.println(customerDAOImpl.getCustomer(110104));
-//		System.out.println("after getb customer");
-		//System.out.println(customerDAOImpl.getAllCustomers());
-//		System.out.println("after get all");
-//
-//		//get list of customers
-//		ArrayList<Customers> customers = customerDAOImpl.getAllCustomers();
-//		for (Customers c : customers) {
-//			System.out.println(c.getFirstName());
-//		}
-//	}
+	@Override
+	public Customers getCustomerbyUserId(String s) {
+		LOG.trace(String.valueOf(System.currentTimeMillis()) + ": cuatomer Accessed, getCustomer()");
+		Customers customer = new Customers();
+		connection = DatabaseConnection.getConnection();
+		String query = "SELECT * FROM customers WHERE username = ?";
+		
+		try {
+			stmt = connection.prepareStatement(query);
+			stmt.setString(1, s);
+			rs = stmt.executeQuery();
+
+			rs.next();
+			customer.setUserId(rs.getInt("userid"));
+			customer.setFirstName(rs.getString("firstname"));
+			customer.setLastName(rs.getString("lastname"));
+			customer.setMiddleInitial(rs.getString("middleinitial"));
+			customer.setAddress(rs.getString("address"));
+			customer.setCity(rs.getString("city"));
+			customer.setState(rs.getString("state"));
+			customer.setZipCode(rs.getInt("zipcode"));
+			customer.setPhoneNumber(rs.getString("phonenumber"));
+			customer.setUserName(rs.getString("username"));
+			customer.setPasswd(rs.getString("passwd"));
+			customer.setAdmin(rs.getBoolean("superuser"));
+			customer.setAccountNumber(rs.getInt("accountnumber"));
+			customer.setKey(rs.getString("secret_key"));
+			customer.setVerified(rs.getBoolean("is_approved"));
+
+		} catch (SQLException e) {
+			LOG.error(String.valueOf(System.currentTimeMillis()) + e.getMessage());
+//			e.printStackTrace();
+		} finally {
+			closeResources();
+		}
+		return customer;
+	}
+
 }
